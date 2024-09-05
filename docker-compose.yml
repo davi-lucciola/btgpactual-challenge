@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: orders_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=orders_db
+      - POSTGRES_USER=manager
+      - POSTGRES_PASSWORD=pr03uc7s
+    volumes:
+      - postgres_data:/var/lib/postgres/data
+
+  rabbitmq-broker:
+    image: rabbitmq:3.13-management
+    container_name: orders_broker
+    ports:
+      - 15672:15672
+      - 5672:5672
+
+volumes:
+  postgres_data:
+
