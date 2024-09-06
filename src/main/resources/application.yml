@@ -5,7 +5,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: manager
     password: pr03uc7s
-    url: jdbc:postgresql://localhost:5432/orders_db?stringtype=unspecified
+    url: jdbc:postgresql://db:5432/orders_db?stringtype=unspecified
   jpa:
     show-sql: true
     hibernate:

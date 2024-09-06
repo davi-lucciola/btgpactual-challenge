@@ -11,7 +11,7 @@ Dentro de cada etapa, haverá mais atividades.
 ## Configuração do Projeto e da Infraestrutura
 
 - [x] Task 1: Criar Projeto Spring Boot e adicionar Depêndencias (1 Hora)
-- [ ] Task 2: Criar containers do RabbitMQ, PostgreSQL e aplicação e conecta-los (3 Horas)
+- [x] Task 2: Criar containers do RabbitMQ, PostgreSQL e aplicação e conecta-los (3 Horas)
 
 ## Implementação das Filas
 

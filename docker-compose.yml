@@ -1,6 +1,16 @@
 version: '3.9'
 
 services:
+  app:
+    container_name: orders_app
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - rabbitmq-broker
+
   db:
     image: postgres:latest
     container_name: orders_db
