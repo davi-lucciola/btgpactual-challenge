@@ -15,8 +15,8 @@ Dentro de cada etapa, haverá mais atividades.
 
 ## Implementação das Filas
 
-- [ ] Task 3: Implementar configurações do RabbitMQ (1 Hora)
-- [ ] Task 4: Implementar consumidor para receber mensagens (1 Hora)
+- [x] Task 3: Implementar configurações do RabbitMQ (1 Hora)
+- [x] Task 4: Implementar consumidor para receber mensagens (1 Hora)
 
 ## Implementação das Filas e Consumers do RabbitMQ
 
