@@ -1,6 +1,6 @@
 package io.api.btgpactual.dto;
 
-import io.api.btgpactual.domain.dto.CreateOrderDTO;
+import io.api.btgpactual.domain.dto.command.CreateOrderDTO;
 import io.api.btgpactual.domain.exceptions.ValidationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

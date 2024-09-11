@@ -17,6 +17,6 @@ public class QueueConfig {
 
     @Bean
     public Queue orderCreatedQueue(){
-        return new Queue(ORDER_CREATED_QUEUE, false);
+        return new Queue(ORDER_CREATED_QUEUE, true);
     }
 }

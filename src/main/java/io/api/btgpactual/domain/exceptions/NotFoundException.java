@@ -3,8 +3,8 @@ package io.api.btgpactual.domain.exceptions;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class ValidationException extends Exception {
-    public ValidationException(String message) {
+public class NotFoundException extends Exception {
+    public NotFoundException(String message) {
         super(message);
     }
 }

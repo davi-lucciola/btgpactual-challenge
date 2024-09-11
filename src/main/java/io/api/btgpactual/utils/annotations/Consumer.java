@@ -1,4 +1,4 @@
-package io.api.btgpactual.infra.annotations;
+package io.api.btgpactual.utils.annotations;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;

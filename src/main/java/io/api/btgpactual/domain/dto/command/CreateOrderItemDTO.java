@@ -1,10 +1,11 @@
-package io.api.btgpactual.domain.dto;
+package io.api.btgpactual.domain.dto.command;
 
+import io.api.btgpactual.domain.dto.IRequestDTO;
 import io.api.btgpactual.domain.exceptions.ValidationException;
 
 import java.math.BigDecimal;
 
-public record CreateOrderItemDTO(String product, Integer quantity, BigDecimal price) {
+public record CreateOrderItemDTO(String product, Integer quantity, BigDecimal price) implements IRequestDTO {
     public void validate() throws ValidationException {
         if (product == null || product.isBlank()) {
             throw new ValidationException("O campo \"product\" é obrigatório.");

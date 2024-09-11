@@ -1,13 +1,13 @@
 package io.api.btgpactual.services;
 
-import io.api.btgpactual.domain.dto.CreateOrderDTO;
-import io.api.btgpactual.domain.dto.CreateOrderItemDTO;
+import io.api.btgpactual.domain.dto.command.CreateOrderDTO;
+import io.api.btgpactual.domain.dto.command.CreateOrderItemDTO;
 import io.api.btgpactual.domain.entities.Customer;
 import io.api.btgpactual.domain.entities.Order;
 import io.api.btgpactual.domain.entities.OrderItem;
 import io.api.btgpactual.domain.exceptions.DomainException;
 import io.api.btgpactual.domain.exceptions.ValidationException;
-import io.api.btgpactual.domain.services.OrderService;
+import io.api.btgpactual.core.usecases.commands.CreateNewOrder;
 import io.api.btgpactual.infra.repositories.commands.CustomerRepository;
 import io.api.btgpactual.infra.repositories.commands.OrderItemRepository;
 import io.api.btgpactual.infra.repositories.commands.OrderRepository;
@@ -31,7 +31,7 @@ import static io.api.btgpactual.mocks.OrderMock.orderEntity;
 @ExtendWith(MockitoExtension.class)
 public class OrderServiceTest {
     @InjectMocks
-    private OrderService orderService;
+    private CreateNewOrder createNewOrder;
 
     @Mock
     private OrderRepository orderRepository;
@@ -49,7 +49,7 @@ public class OrderServiceTest {
         Mockito.when(customerRepository.findById(createOrderDTO.customerId())).thenReturn(Optional.ofNullable(null));
 
         DomainException exception = Assertions.assertThrows(DomainException.class, () -> {
-            orderService.createNewOrder(createOrderDTO);
+            createNewOrder.createNewOrder(createOrderDTO);
         });
 
         Assertions.assertEquals("Cliente não encontrado.", exception.getMessage());
@@ -63,7 +63,7 @@ public class OrderServiceTest {
         Mockito.when(orderRepository.findById(createOrderDTO.orderId())).thenReturn(Optional.of(new Order()));
 
         DomainException exception = Assertions.assertThrows(DomainException.class, () -> {
-            orderService.createNewOrder(createOrderDTO);
+            createNewOrder.createNewOrder(createOrderDTO);
         });
 
         Assertions.assertEquals("Pedido já registrado.", exception.getMessage());
@@ -80,7 +80,7 @@ public class OrderServiceTest {
         Mockito.when(orderRepository.saveAndFlush(Mockito.any(Order.class))).thenReturn(orderSaved);
         Mockito.when(orderItemRepository.saveAllAndFlush(Mockito.any(List.class))).thenReturn(orderItemsSaved);
 
-        Order order = orderService.createNewOrder(createOrderDTO);
+        Order order = createNewOrder.createNewOrder(createOrderDTO);
 
         Assertions.assertEquals(order.getId(), createOrderDTO.orderId());
         Assertions.assertEquals(order.getCustomer().getId(), createOrderDTO.customerId());

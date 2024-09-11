@@ -1,20 +1,20 @@
-package io.api.btgpactual.domain.services;
+package io.api.btgpactual.core.usecases.commands;
 
-import io.api.btgpactual.domain.dto.CreateOrderDTO;
-import io.api.btgpactual.domain.exceptions.ValidationException;
+import io.api.btgpactual.domain.dto.command.CreateOrderDTO;
 import io.api.btgpactual.domain.entities.Customer;
 import io.api.btgpactual.domain.entities.Order;
 import io.api.btgpactual.domain.exceptions.DomainException;
+import io.api.btgpactual.domain.exceptions.ValidationException;
 import io.api.btgpactual.infra.repositories.commands.CustomerRepository;
 import io.api.btgpactual.infra.repositories.commands.OrderItemRepository;
 import io.api.btgpactual.infra.repositories.commands.OrderRepository;
+import io.api.btgpactual.utils.annotations.UseCase;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-@Service
+@UseCase
 @RequiredArgsConstructor
-public class OrderService {
+public class CreateNewOrder {
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
     private final OrderItemRepository orderItemRepository;
@@ -24,6 +24,7 @@ public class OrderService {
         createOrderDTO.validate();
 
         Customer customer = customerRepository.findById(createOrderDTO.customerId()).orElse(null);
+
         if (customer == null) {
             throw new DomainException("Cliente não encontrado.");
         }

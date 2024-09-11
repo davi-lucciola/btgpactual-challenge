@@ -1,7 +1,7 @@
 package io.api.btgpactual.domain.entities;
 
-import io.api.btgpactual.domain.dto.CreateOrderDTO;
-import io.api.btgpactual.domain.dto.CreateOrderItemDTO;
+import io.api.btgpactual.domain.dto.command.CreateOrderDTO;
+import io.api.btgpactual.domain.dto.command.CreateOrderItemDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +36,10 @@ public class Order {
     public Order(CreateOrderDTO createOrderDTO) {
         this.id = createOrderDTO.orderId();
         this.customer = new Customer(createOrderDTO.customerId());
-        this.total = createOrderDTO.items().stream().map(CreateOrderItemDTO::price).reduce(BigDecimal.ZERO, BigDecimal::add);
+        this.total = createOrderDTO.items()
+                .stream()
+                .map(dto -> dto.price().multiply(BigDecimal.valueOf(dto.quantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public void setOrderItems(List<CreateOrderItemDTO> items) {

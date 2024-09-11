@@ -1,6 +1,6 @@
 package io.api.btgpactual.mocks;
 
-import io.api.btgpactual.domain.dto.CreateOrderItemDTO;
+import io.api.btgpactual.domain.dto.command.CreateOrderItemDTO;
 import io.api.btgpactual.domain.entities.OrderItem;
 
 import java.math.BigDecimal;

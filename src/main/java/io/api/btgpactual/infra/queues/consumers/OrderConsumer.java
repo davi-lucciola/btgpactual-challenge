@@ -1,11 +1,11 @@
 package io.api.btgpactual.infra.queues.consumers;
 
-import io.api.btgpactual.infra.annotations.Consumer;
-import io.api.btgpactual.domain.dto.CreateOrderDTO;
-import io.api.btgpactual.infra.queues.QueueConfig;
+import io.api.btgpactual.domain.dto.command.CreateOrderDTO;
 import io.api.btgpactual.domain.exceptions.DomainException;
 import io.api.btgpactual.domain.exceptions.ValidationException;
-import io.api.btgpactual.domain.services.OrderService;
+import io.api.btgpactual.domain.services.IOrderService;
+import io.api.btgpactual.infra.queues.QueueConfig;
+import io.api.btgpactual.utils.annotations.Consumer;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,7 @@ import org.springframework.messaging.Message;
 @Consumer
 @RequiredArgsConstructor
 public class OrderConsumer {
-    private final OrderService orderService;
+    private final IOrderService orderService;
     private final Logger logger = LoggerFactory.getLogger(OrderConsumer.class);
 
     @RabbitListener(queues = QueueConfig.ORDER_CREATED_QUEUE)

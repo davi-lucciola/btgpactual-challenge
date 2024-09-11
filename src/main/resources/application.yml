@@ -2,27 +2,13 @@ spring:
   application:
     name: btgpactual-challange
 
-  # Tools
-  devtools:
-    restart:
-      poll-interval: 2s
-
   # Database
   # PostgreSQL
   datasource:
-    # PostgresSQL
-    pg:
-      url: jdbc:postgresql://localhost:5432/orders_db
-      username: manager
-      password: pr03uc7s
-      driver-class-name: org.postgresql.Driver
-
-    # H2
-    h2:
-      url: jdbc:postgresql://localhost:5432/orders_db
-      username: manager
-      password: pr03uc7s
-      driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://db:5432/orders_db
+    username: manager
+    password: pr03uc7s
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     show-sql: false
@@ -35,7 +21,7 @@ spring:
 
   # Messaging
   rabbitmq:
-    host: localhost
+    host: rabbitmq-broker
     port: 5672
     username: guest
     password: guest

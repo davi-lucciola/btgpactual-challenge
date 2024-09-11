@@ -1,6 +1,6 @@
 package io.api.btgpactual.domain.entities;
 
-import io.api.btgpactual.domain.dto.CreateOrderItemDTO;
+import io.api.btgpactual.domain.dto.command.CreateOrderItemDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
