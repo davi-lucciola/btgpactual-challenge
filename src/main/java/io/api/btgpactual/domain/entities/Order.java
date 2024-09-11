@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "orders")
 public class Order {
+
     @Id
     private Long id;
 

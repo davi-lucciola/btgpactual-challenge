@@ -1,7 +1,6 @@
 package io.api.btgpactual.domain.services;
 
 import io.api.btgpactual.domain.dto.command.CreateOrderDTO;
-import io.api.btgpactual.domain.dto.queries.CustomerOrdersDTO;
 import io.api.btgpactual.domain.dto.queries.OrderDTO;
 import io.api.btgpactual.domain.dto.queries.QueryOrdersFilter;
 import io.api.btgpactual.domain.entities.Order;
@@ -15,5 +14,5 @@ import java.util.List;
 public interface IOrderService {
     List<OrderDTO> getAllOrders(QueryOrdersFilter filter) throws NoContentException;
     OrderDTO getOrderById(Long orderId) throws NotFoundException;
-    Order createNewOrder(CreateOrderDTO createOrderDTO) throws DomainException, ValidationException;
+    Order processOrder(CreateOrderDTO createOrderDTO) throws DomainException, ValidationException;
 }

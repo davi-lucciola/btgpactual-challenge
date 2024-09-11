@@ -3,7 +3,7 @@ package io.api.btgpactual.application;
 import io.api.btgpactual.core.services.CustomerService;
 import io.api.btgpactual.core.services.OrderService;
 import io.api.btgpactual.core.usecases.commands.CreateNewCustomer;
-import io.api.btgpactual.core.usecases.commands.CreateNewOrder;
+import io.api.btgpactual.core.usecases.commands.ProcessOrder;
 import io.api.btgpactual.core.usecases.queries.DetailOrder;
 import io.api.btgpactual.core.usecases.queries.GetAllOrders;
 import io.api.btgpactual.core.usecases.queries.GetCustomerOrders;
@@ -17,7 +17,7 @@ public class AppConfig {
     public OrderService orderService(
             GetAllOrders getAllUseCase,
             DetailOrder detailUseCase,
-            CreateNewOrder createNewUseCase
+            ProcessOrder createNewUseCase
     ) {
         return new OrderService(getAllUseCase, detailUseCase, createNewUseCase);
     }
@@ -26,5 +26,5 @@ public class AppConfig {
     public CustomerService customerService(GetCustomerOrders getCustomerOrders, CreateNewCustomer createNewCustomer) {
         return new CustomerService(getCustomerOrders, createNewCustomer);
     }
-    
+
 }

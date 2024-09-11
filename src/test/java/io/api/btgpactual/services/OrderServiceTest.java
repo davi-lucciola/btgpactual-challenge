@@ -7,7 +7,7 @@ import io.api.btgpactual.domain.entities.Order;
 import io.api.btgpactual.domain.entities.OrderItem;
 import io.api.btgpactual.domain.exceptions.DomainException;
 import io.api.btgpactual.domain.exceptions.ValidationException;
-import io.api.btgpactual.core.usecases.commands.CreateNewOrder;
+import io.api.btgpactual.core.usecases.commands.ProcessOrder;
 import io.api.btgpactual.infra.repositories.commands.CustomerRepository;
 import io.api.btgpactual.infra.repositories.commands.OrderItemRepository;
 import io.api.btgpactual.infra.repositories.commands.OrderRepository;
@@ -31,7 +31,7 @@ import static io.api.btgpactual.mocks.OrderMock.orderEntity;
 @ExtendWith(MockitoExtension.class)
 public class OrderServiceTest {
     @InjectMocks
-    private CreateNewOrder createNewOrder;
+    private ProcessOrder processOrder;
 
     @Mock
     private OrderRepository orderRepository;
@@ -49,24 +49,10 @@ public class OrderServiceTest {
         Mockito.when(customerRepository.findById(createOrderDTO.customerId())).thenReturn(Optional.ofNullable(null));
 
         DomainException exception = Assertions.assertThrows(DomainException.class, () -> {
-            createNewOrder.createNewOrder(createOrderDTO);
+            processOrder.processOrder(createOrderDTO);
         });
 
         Assertions.assertEquals("Cliente não encontrado.", exception.getMessage());
-    }
-
-    @Test
-    public void createNewOrderOrderAlreadyExists() {
-        CreateOrderDTO createOrderDTO = createOrderDTO();
-
-        Mockito.when(customerRepository.findById(createOrderDTO.customerId())).thenReturn(Optional.of(new Customer()));
-        Mockito.when(orderRepository.findById(createOrderDTO.orderId())).thenReturn(Optional.of(new Order()));
-
-        DomainException exception = Assertions.assertThrows(DomainException.class, () -> {
-            createNewOrder.createNewOrder(createOrderDTO);
-        });
-
-        Assertions.assertEquals("Pedido já registrado.", exception.getMessage());
     }
 
     @Test
@@ -80,12 +66,13 @@ public class OrderServiceTest {
         Mockito.when(orderRepository.saveAndFlush(Mockito.any(Order.class))).thenReturn(orderSaved);
         Mockito.when(orderItemRepository.saveAllAndFlush(Mockito.any(List.class))).thenReturn(orderItemsSaved);
 
-        Order order = createNewOrder.createNewOrder(createOrderDTO);
+        Order order = processOrder.processOrder(createOrderDTO);
 
         Assertions.assertEquals(order.getId(), createOrderDTO.orderId());
         Assertions.assertEquals(order.getCustomer().getId(), createOrderDTO.customerId());
-        Assertions.assertEquals(order.getTotal(), createOrderDTO.items()
-                .stream().map(CreateOrderItemDTO::price).reduce(BigDecimal.ZERO, BigDecimal::add));
+        Assertions.assertEquals(order.getTotal(), createOrderDTO.items().stream()
+                .map(dto -> dto.price().multiply(BigDecimal.valueOf(dto.quantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add));
 
         Assertions.assertTrue(order.getItems().size() == createOrderDTO.items().size());
 

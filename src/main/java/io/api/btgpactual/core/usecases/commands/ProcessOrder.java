@@ -14,13 +14,13 @@ import lombok.RequiredArgsConstructor;
 
 @UseCase
 @RequiredArgsConstructor
-public class CreateNewOrder {
+public class ProcessOrder {
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
     private final OrderItemRepository orderItemRepository;
 
     @Transactional
-    public Order createNewOrder(CreateOrderDTO createOrderDTO) throws DomainException, ValidationException {
+    public Order processOrder(CreateOrderDTO createOrderDTO) throws DomainException, ValidationException {
         createOrderDTO.validate();
 
         Customer customer = customerRepository.findById(createOrderDTO.customerId()).orElse(null);
@@ -30,8 +30,10 @@ public class CreateNewOrder {
         }
 
         Order order = orderRepository.findById(createOrderDTO.orderId()).orElse(null);
+
         if (order != null) {
-            throw new DomainException("Pedido já registrado.");
+            orderItemRepository.deleteByOrderId(order.getId());
+            orderRepository.delete(order);
         }
 
         order = new Order(createOrderDTO);

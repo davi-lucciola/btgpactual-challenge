@@ -24,7 +24,7 @@ public class OrderConsumer {
             CreateOrderDTO createOrderDTO = message.getPayload();
             logger.info("Pedido recebido: {}", createOrderDTO);
 
-            orderService.createNewOrder(createOrderDTO);
+            orderService.processOrder(createOrderDTO);
         } catch (DomainException | ValidationException exception) {
             logger.error(exception.getMessage());
         } catch (Exception exception) {
