@@ -1,13 +1,12 @@
-package io.api.btgpactual.services;
+package io.api.btgpactual.usecases.command;
 
+import io.api.btgpactual.core.usecases.commands.ProcessOrder;
 import io.api.btgpactual.domain.dto.command.CreateOrderDTO;
-import io.api.btgpactual.domain.dto.command.CreateOrderItemDTO;
 import io.api.btgpactual.domain.entities.Customer;
 import io.api.btgpactual.domain.entities.Order;
 import io.api.btgpactual.domain.entities.OrderItem;
 import io.api.btgpactual.domain.exceptions.DomainException;
 import io.api.btgpactual.domain.exceptions.ValidationException;
-import io.api.btgpactual.core.usecases.commands.ProcessOrder;
 import io.api.btgpactual.infra.repositories.commands.CustomerRepository;
 import io.api.btgpactual.infra.repositories.commands.OrderItemRepository;
 import io.api.btgpactual.infra.repositories.commands.OrderRepository;
@@ -25,13 +24,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static io.api.btgpactual.mocks.OrderItemsMock.orderItemsEntities;
-import static io.api.btgpactual.mocks.OrderMock.createOrderDTO;
-import static io.api.btgpactual.mocks.OrderMock.orderEntity;
+import static io.api.btgpactual.mocks.OrderMock.CreateOrderDTOMock;
+import static io.api.btgpactual.mocks.OrderMock.OrderEntityMock;
 
 @ExtendWith(MockitoExtension.class)
-public class OrderServiceTest {
+public class ProcessOrderTest {
     @InjectMocks
-    private ProcessOrder processOrder;
+    private ProcessOrder processOrderUseCase;
 
     @Mock
     private OrderRepository orderRepository;
@@ -44,12 +43,12 @@ public class OrderServiceTest {
 
     @Test
     public void createNewOrderCustomerNotFound() {
-        CreateOrderDTO createOrderDTO = createOrderDTO();
+        CreateOrderDTO createOrderDTO = CreateOrderDTOMock();
 
         Mockito.when(customerRepository.findById(createOrderDTO.customerId())).thenReturn(Optional.ofNullable(null));
 
         DomainException exception = Assertions.assertThrows(DomainException.class, () -> {
-            processOrder.processOrder(createOrderDTO);
+            processOrderUseCase.processOrder(createOrderDTO);
         });
 
         Assertions.assertEquals("Cliente não encontrado.", exception.getMessage());
@@ -57,8 +56,8 @@ public class OrderServiceTest {
 
     @Test
     public void createNewOrderSuccessfully() throws DomainException, ValidationException {
-        CreateOrderDTO createOrderDTO = createOrderDTO();
-        Order orderSaved = orderEntity();
+        CreateOrderDTO createOrderDTO = CreateOrderDTOMock();
+        Order orderSaved = OrderEntityMock();
         List<OrderItem> orderItemsSaved = orderItemsEntities();
 
         Mockito.when(customerRepository.findById(createOrderDTO.customerId())).thenReturn(Optional.of(new Customer()));
@@ -66,7 +65,7 @@ public class OrderServiceTest {
         Mockito.when(orderRepository.saveAndFlush(Mockito.any(Order.class))).thenReturn(orderSaved);
         Mockito.when(orderItemRepository.saveAllAndFlush(Mockito.any(List.class))).thenReturn(orderItemsSaved);
 
-        Order order = processOrder.processOrder(createOrderDTO);
+        Order order = processOrderUseCase.processOrder(createOrderDTO);
 
         Assertions.assertEquals(order.getId(), createOrderDTO.orderId());
         Assertions.assertEquals(order.getCustomer().getId(), createOrderDTO.customerId());

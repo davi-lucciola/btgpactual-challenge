@@ -2,6 +2,8 @@ package io.api.btgpactual.domain.dto.queries;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.api.btgpactual.utils.responses.PaginationDTO;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,16 +14,11 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class OrderDTO {
+@AllArgsConstructor
+public class OrderDTO extends PaginationDTO {
     private Long orderId;
     private Long customerId;
     private String customer;
-    private BigDecimal total;
+    private BigDecimal orderTotal;
     private Long itemQuantity;
-    private String items;
-
-    public List<OrderItemDTO> getItems() throws JsonProcessingException {
-        final ObjectMapper jsonMapper = new ObjectMapper();
-        return List.of(jsonMapper.readValue(this.items, OrderItemDTO[].class));
-    }
 }

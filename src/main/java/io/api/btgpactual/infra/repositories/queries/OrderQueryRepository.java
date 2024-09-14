@@ -1,6 +1,7 @@
 package io.api.btgpactual.infra.repositories.queries;
 
 import io.api.btgpactual.domain.dto.queries.OrderDTO;
+import io.api.btgpactual.domain.dto.queries.OrderDetailDTO;
 import io.api.btgpactual.domain.dto.queries.QueryOrdersFilter;
 import io.api.btgpactual.infra.repositories.sql.OrderSQL;
 import jakarta.persistence.EntityManager;
@@ -21,37 +22,40 @@ public class OrderQueryRepository {
 
     @PersistenceContext
     private final EntityManager entityManager;
-    private final Logger logger = LoggerFactory.getLogger(OrderQueryRepository.class);
 
+    @SuppressWarnings({"unchecked", "deprecated"})
     public List<OrderDTO> getAll(QueryOrdersFilter filter) {
-        String sql = OrderSQL.ORDER_QUERY;
+        String sql = OrderSQL.ORDER_PAGINATION_QUERY;
 
         StringBuilder where = new StringBuilder();
-        if (filter.customerId() != null) {
+        if (filter.getCustomerId() != null) {
             where.append(" AND c.id = :customerId ");
         }
 
-        if (filter.minTotal() != null) {
+        if (filter.getMinTotal() != null) {
             where.append(" AND o.total >= :minTotal ");
         }
 
-        if (filter.maxTotal() != null) {
+        if (filter.getMaxTotal() != null) {
             where.append(" AND o.total <= maxTotal ");
         }
 
         sql = sql.replace(":WHERE", where.toString());
-        Query query = entityManager.createNativeQuery(sql);
 
-        if (filter.customerId() != null) {
-            query.setParameter("customerId", filter.customerId());
+        Query query = entityManager.createNativeQuery(sql)
+                .setParameter("page", filter.getPage())
+                .setParameter("pageSize", filter.getPageSize());
+
+        if (filter.getCustomerId() != null) {
+            query.setParameter("customerId", filter.getCustomerId());
         }
 
-        if (filter.minTotal() != null) {
-            query.setParameter("minTotal", filter.minTotal());
+        if (filter.getMinTotal() != null) {
+            query.setParameter("minTotal", filter.getMinTotal());
         }
 
-        if (filter.maxTotal() != null) {
-            query.setParameter("maxTotal", filter.maxTotal());
+        if (filter.getMaxTotal() != null) {
+            query.setParameter("maxTotal", filter.getMaxTotal());
         }
 
         return query.unwrap(org.hibernate.query.Query.class)
@@ -59,17 +63,22 @@ public class OrderQueryRepository {
                 .getResultList();
     }
 
-    public OrderDTO getById(Long orderId) {
+    @SuppressWarnings({"unchecked", "deprecated"})
+    public OrderDetailDTO getById(Long orderId) {
         try {
-            String sql = OrderSQL.ORDER_QUERY.replace(
+            String sql = OrderSQL.ORDER_DETAIL_QUERY.replace(
                     ":WHERE", " AND o.id = :orderId ");
 
-            return (OrderDTO) entityManager.createNativeQuery(sql).unwrap(org.hibernate.query.Query.class)
+            return (OrderDetailDTO) entityManager.createNativeQuery(sql)
+                    .unwrap(org.hibernate.query.Query.class)
                     .setParameter("orderId", orderId)
-                    .setResultTransformer(Transformers.aliasToBean(OrderDTO.class))
+                    .setResultTransformer(Transformers.aliasToBean(OrderDetailDTO.class))
                     .getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
     }
+
+    // OBS: Apesar o SetResultTransformer estar depreciado, a outra alternativa (TupleTransformer)
+    // Seria necessário implementar o transformador na mão. Por isso preferi utilizar o "AliasToBean"
 }

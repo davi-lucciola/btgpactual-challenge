@@ -1,4 +1,4 @@
-package io.api.btgpactual.application;
+package io.api.btgpactual.application.config;
 
 import io.api.btgpactual.core.services.CustomerService;
 import io.api.btgpactual.core.services.OrderService;
@@ -26,5 +26,4 @@ public class AppConfig {
     public CustomerService customerService(GetCustomerOrders getCustomerOrders, CreateNewCustomer createNewCustomer) {
         return new CustomerService(getCustomerOrders, createNewCustomer);
     }
-
 }

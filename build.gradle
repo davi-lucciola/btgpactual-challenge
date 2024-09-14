@@ -13,6 +13,10 @@ java {
 	}
 }
 
+springBoot {
+	buildInfo()
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -38,6 +42,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.amqp:spring-rabbit-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// Docs
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 
 	// Dev Tools
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

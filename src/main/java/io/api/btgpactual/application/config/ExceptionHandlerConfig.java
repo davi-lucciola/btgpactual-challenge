@@ -1,4 +1,4 @@
-package io.api.btgpactual.application;
+package io.api.btgpactual.application.config;
 
 import io.api.btgpactual.domain.exceptions.DomainException;
 import io.api.btgpactual.domain.exceptions.NoContentException;
@@ -17,7 +17,7 @@ public class ExceptionHandlerConfig {
 
     @ExceptionHandler({ DomainException.class })
     public ResponseEntity<ResponseDTO> handleDomainException(Exception exception) {
-        return new ResponseEntity<>(new ResponseDTO(exception.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ResponseDTO(exception.getMessage(), null), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({ NoContentException.class })
@@ -27,12 +27,12 @@ public class ExceptionHandlerConfig {
 
     @ExceptionHandler({ NotFoundException.class })
     public ResponseEntity<ResponseDTO> handleNotFoundException(Exception exception) {
-        return new ResponseEntity<>(new ResponseDTO(exception.getMessage()), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new ResponseDTO(exception.getMessage(), null), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({ Exception.class })
     public ResponseEntity<ResponseDTO> handleGenericException(Exception exception) {
-        return new ResponseEntity<>(new ResponseDTO(exception.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ResponseDTO(exception.getMessage(), null), HttpStatus.BAD_REQUEST);
     }
 
 }

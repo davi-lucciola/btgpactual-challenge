@@ -1,7 +1,7 @@
 package io.api.btgpactual.application.controllers;
 
 import io.api.btgpactual.domain.dto.command.CreateCustomerDTO;
-import io.api.btgpactual.domain.dto.queries.CustomerOrdersDTO;
+import io.api.btgpactual.domain.dto.queries.OrderDTO;
 import io.api.btgpactual.domain.dto.queries.QueryOrdersBasicFilter;
 import io.api.btgpactual.domain.dto.queries.QueryOrdersFilter;
 import io.api.btgpactual.domain.exceptions.DomainException;
@@ -9,10 +9,16 @@ import io.api.btgpactual.domain.exceptions.NoContentException;
 import io.api.btgpactual.domain.exceptions.NotFoundException;
 import io.api.btgpactual.domain.exceptions.ValidationException;
 import io.api.btgpactual.domain.services.ICustomerService;
-import io.api.btgpactual.utils.responses.ResponseDTO;
+import io.api.btgpactual.utils.responses.PaginationResponse;
+import io.api.btgpactual.utils.responses.ResponseDTO;;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Customers")
 @RestController
 @RequestMapping("/customers")
 @RequiredArgsConstructor
@@ -20,20 +26,22 @@ public class CustomerController {
     private final ICustomerService customerService;
 
     @GetMapping("/{id}/orders")
-    public CustomerOrdersDTO getMyOrders(
-            @PathVariable("id") Long customerId, QueryOrdersBasicFilter filterBasic
+    @Operation(description = "Get customer orders by customer id.")
+    public PaginationResponse<OrderDTO> getMyOrders(
+            @PathVariable("id") Long customerId, @ParameterObject QueryOrdersBasicFilter filterBasic
     ) throws ValidationException, NotFoundException, NoContentException {
-        QueryOrdersFilter filter = new QueryOrdersFilter(
-                customerId, filterBasic.minTotal(), filterBasic.maxTotal());
+        QueryOrdersFilter filter = new QueryOrdersFilter(customerId, filterBasic.getMinTotal(),
+                filterBasic.getMaxTotal(), filterBasic.getPage(), filterBasic.getPageSize());
 
         return customerService.getOrdersByCostumer(filter);
     }
 
     @PostMapping
+    @Operation(description = "Create new customer.")
     public ResponseDTO createNewCustomer(
             @RequestBody CreateCustomerDTO createCustomerDTO
     ) throws DomainException, ValidationException {
-        customerService.createNewCustomer(createCustomerDTO);
-        return new ResponseDTO("Cliente cadastrado com sucesso.");
+        Long customerId = customerService.createNewCustomer(createCustomerDTO).getId();
+        return new ResponseDTO("Cliente cadastrado com sucesso.", customerId);
     }
 }
