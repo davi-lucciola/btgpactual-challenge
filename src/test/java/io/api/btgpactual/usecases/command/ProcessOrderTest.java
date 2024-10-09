@@ -24,8 +24,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static io.api.btgpactual.mocks.OrderItemsMock.orderItemsEntities;
-import static io.api.btgpactual.mocks.OrderMock.CreateOrderDTOMock;
-import static io.api.btgpactual.mocks.OrderMock.OrderEntityMock;
+import static io.api.btgpactual.mocks.OrderMock.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ProcessOrderTest {

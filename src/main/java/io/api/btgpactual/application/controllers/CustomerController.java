@@ -9,13 +9,13 @@ import io.api.btgpactual.domain.exceptions.NoContentException;
 import io.api.btgpactual.domain.exceptions.NotFoundException;
 import io.api.btgpactual.domain.exceptions.ValidationException;
 import io.api.btgpactual.domain.services.ICustomerService;
-import io.api.btgpactual.utils.responses.PaginationResponse;
-import io.api.btgpactual.utils.responses.ResponseDTO;;
+import io.api.btgpactual.utils.dto.PaginationResponseDTO;
+import io.api.btgpactual.utils.dto.ResponseDTO;;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Customers")
@@ -27,7 +27,7 @@ public class CustomerController {
 
     @GetMapping("/{id}/orders")
     @Operation(description = "Get customer orders by customer id.")
-    public PaginationResponse<OrderDTO> getMyOrders(
+    public PaginationResponseDTO<OrderDTO> getMyOrders(
             @PathVariable("id") Long customerId, @ParameterObject QueryOrdersBasicFilter filterBasic
     ) throws ValidationException, NotFoundException, NoContentException {
         QueryOrdersFilter filter = new QueryOrdersFilter(customerId, filterBasic.getMinTotal(),
@@ -37,6 +37,7 @@ public class CustomerController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     @Operation(description = "Create new customer.")
     public ResponseDTO createNewCustomer(
             @RequestBody CreateCustomerDTO createCustomerDTO

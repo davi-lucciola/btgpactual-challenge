@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 
-import static io.api.btgpactual.mocks.OrderItemsMock.createOrderItemsDTO;
+import static io.api.btgpactual.mocks.OrderItemsMock.CreateOrderItemsDTO;
 
 @ExtendWith(MockitoExtension.class)
 public class CreateOrderDTOTest {
@@ -17,7 +17,7 @@ public class CreateOrderDTOTest {
     @Test
     public void testValidateNoOrderId() {
         CreateOrderDTO orderDTO = new CreateOrderDTO(
-                null, 3L, createOrderItemsDTO());
+                null, 3L, CreateOrderItemsDTO());
 
         ValidationException exception = Assertions.assertThrows(
                 ValidationException.class, orderDTO::validate);
@@ -28,7 +28,7 @@ public class CreateOrderDTOTest {
     @Test
     public void testValidateNoCustomerId() {
         CreateOrderDTO orderDTO = new CreateOrderDTO(
-                2L, null, createOrderItemsDTO());
+                2L, null, CreateOrderItemsDTO());
 
         ValidationException exception = Assertions.assertThrows(
                 ValidationException.class, orderDTO::validate);

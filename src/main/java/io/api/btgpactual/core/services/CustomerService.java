@@ -11,7 +11,7 @@ import io.api.btgpactual.domain.exceptions.NoContentException;
 import io.api.btgpactual.domain.exceptions.NotFoundException;
 import io.api.btgpactual.domain.exceptions.ValidationException;
 import io.api.btgpactual.domain.services.ICustomerService;
-import io.api.btgpactual.utils.responses.PaginationResponse;
+import io.api.btgpactual.utils.dto.PaginationResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class CustomerService implements ICustomerService {
     private final CreateNewCustomer createNewUseCase;
 
     @Override
-    public PaginationResponse<OrderDTO> getOrdersByCostumer(QueryOrdersFilter filter) throws ValidationException, NotFoundException, NoContentException {
+    public PaginationResponseDTO<OrderDTO> getOrdersByCostumer(QueryOrdersFilter filter) throws ValidationException, NotFoundException, NoContentException {
         return customerOrdersUseCase.getOrdersByCustomer(filter);
     }
 

@@ -1,4 +1,4 @@
-package io.api.btgpactual.application.config;
+package io.api.btgpactual.application;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

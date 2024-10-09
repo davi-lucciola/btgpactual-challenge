@@ -39,8 +39,8 @@ public class DetailOrderTest {
         var orderId = 1L;
         Mockito.when(orderQueryRepository.getById(orderId)).thenReturn(OrderMock.OrderDetailDTOMock());
 
-//        OrderDetailDTO orderDetailDTO = detailOrderUseCase.detailOrder(orderId);
+        OrderDetailDTO orderDetailDTO = detailOrderUseCase.detailOrder(orderId);
 
-//        Assertions.assertEquals("Pedido não encontrado.", exception.getMessage());
+        Assertions.assertEquals(OrderMock.OrderDetailDTOMock(), orderDetailDTO);
     }
 }

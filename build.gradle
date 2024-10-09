@@ -37,6 +37,7 @@ dependencies {
 	implementation 'org.postgresql:postgresql:42.7.4'
 	implementation 'org.flywaydb:flyway-core:10.17.2'
 	runtimeOnly 'org.flywaydb:flyway-database-postgresql:10.17.2'
+	testImplementation 'com.h2database:h2:2.3.232'
 
 	// Tests
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

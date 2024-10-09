@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderItemsMock {
-    public static List<CreateOrderItemDTO> createOrderItemsDTO() {
+    public static List<CreateOrderItemDTO> CreateOrderItemsDTO() {
         List<CreateOrderItemDTO> orderItems = new ArrayList<>();
 
         orderItems.add(new CreateOrderItemDTO("Ração de Gato", 8, BigDecimal.TEN));
@@ -18,7 +18,7 @@ public class OrderItemsMock {
     }
 
     public static List<OrderItem> orderItemsEntities() {
-        List<OrderItem> orderItems = createOrderItemsDTO().stream().map(OrderItem::new).toList();
+        List<OrderItem> orderItems = CreateOrderItemsDTO().stream().map(OrderItem::new).toList();
 
         orderItems.get(0).setId(1L);
         orderItems.get(1).setId(2L);

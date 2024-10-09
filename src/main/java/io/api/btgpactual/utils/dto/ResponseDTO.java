@@ -1,4 +1,4 @@
-package io.api.btgpactual.utils.responses;
+package io.api.btgpactual.utils.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

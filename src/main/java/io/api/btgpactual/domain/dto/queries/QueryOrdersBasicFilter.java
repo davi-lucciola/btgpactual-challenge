@@ -1,7 +1,6 @@
 package io.api.btgpactual.domain.dto.queries;
 
-import io.api.btgpactual.utils.responses.PaginationFilter;
-import io.swagger.v3.oas.annotations.Parameter;
+import io.api.btgpactual.utils.dto.PaginationFilter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

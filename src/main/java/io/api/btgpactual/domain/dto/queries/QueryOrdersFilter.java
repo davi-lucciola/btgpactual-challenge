@@ -2,7 +2,7 @@ package io.api.btgpactual.domain.dto.queries;
 
 import io.api.btgpactual.domain.dto.IRequestDTO;
 import io.api.btgpactual.domain.exceptions.ValidationException;
-import io.api.btgpactual.utils.responses.PaginationFilter;
+import io.api.btgpactual.utils.dto.PaginationFilter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

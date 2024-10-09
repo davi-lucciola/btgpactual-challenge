@@ -1,4 +1,4 @@
-package io.api.btgpactual.application.config;
+package io.api.btgpactual.application;
 
 import io.api.btgpactual.core.services.CustomerService;
 import io.api.btgpactual.core.services.OrderService;

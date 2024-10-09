@@ -1,4 +1,4 @@
-package io.api.btgpactual.utils.responses;
+package io.api.btgpactual.utils.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaginationResponse<T> {
+public class PaginationResponseDTO<T> {
     private List<T> data;
     private Long total;
     private Integer page;

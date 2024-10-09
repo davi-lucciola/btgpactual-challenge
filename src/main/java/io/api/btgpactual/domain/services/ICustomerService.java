@@ -8,9 +8,9 @@ import io.api.btgpactual.domain.exceptions.DomainException;
 import io.api.btgpactual.domain.exceptions.NoContentException;
 import io.api.btgpactual.domain.exceptions.NotFoundException;
 import io.api.btgpactual.domain.exceptions.ValidationException;
-import io.api.btgpactual.utils.responses.PaginationResponse;
+import io.api.btgpactual.utils.dto.PaginationResponseDTO;
 
 public interface ICustomerService {
-    PaginationResponse<OrderDTO> getOrdersByCostumer(QueryOrdersFilter filter) throws ValidationException, NotFoundException, NoContentException;
+    PaginationResponseDTO<OrderDTO> getOrdersByCostumer(QueryOrdersFilter filter) throws ValidationException, NotFoundException, NoContentException;
     Customer createNewCustomer(CreateCustomerDTO createCustomerDTO) throws ValidationException, DomainException;
 }

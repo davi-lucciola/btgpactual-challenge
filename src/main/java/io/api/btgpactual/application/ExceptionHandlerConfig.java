@@ -1,9 +1,9 @@
-package io.api.btgpactual.application.config;
+package io.api.btgpactual.application;
 
 import io.api.btgpactual.domain.exceptions.DomainException;
 import io.api.btgpactual.domain.exceptions.NoContentException;
 import io.api.btgpactual.domain.exceptions.NotFoundException;
-import io.api.btgpactual.utils.responses.ResponseDTO;
+import io.api.btgpactual.utils.dto.ResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

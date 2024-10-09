@@ -9,7 +9,7 @@ import io.api.btgpactual.domain.exceptions.ValidationException;
 import io.api.btgpactual.infra.repositories.commands.CustomerRepository;
 import io.api.btgpactual.infra.repositories.queries.OrderQueryRepository;
 import io.api.btgpactual.utils.annotations.UseCase;
-import io.api.btgpactual.utils.responses.PaginationResponse;
+import io.api.btgpactual.utils.dto.PaginationResponseDTO;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class GetCustomerOrders {
     private final CustomerRepository customerRepository;
     private final OrderQueryRepository orderQueryRepository;
 
-    public PaginationResponse<OrderDTO> getOrdersByCustomer(QueryOrdersFilter filter) throws ValidationException, NotFoundException, NoContentException {
+    public PaginationResponseDTO<OrderDTO> getOrdersByCustomer(QueryOrdersFilter filter) throws ValidationException, NotFoundException, NoContentException {
         filter.validate();
         Customer customer = customerRepository.findById(filter.getCustomerId()).orElse(null);
 
@@ -34,7 +34,7 @@ public class GetCustomerOrders {
             throw new NoContentException();
         }
 
-        return new PaginationResponse<>(
+        return new PaginationResponseDTO<>(
                 customerOrders, customerOrders.get(0).getTotal(), filter.getPage(), filter.getPageSize());
     }
 }

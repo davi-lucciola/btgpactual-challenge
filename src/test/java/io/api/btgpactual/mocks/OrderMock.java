@@ -12,17 +12,24 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
-import static io.api.btgpactual.mocks.OrderItemsMock.createOrderItemsDTO;
+import static io.api.btgpactual.mocks.OrderItemsMock.CreateOrderItemsDTO;
 
 public class OrderMock {
     private static final ObjectMapper mapper = new ObjectMapper();
 
     public static CreateOrderDTO CreateOrderDTOMock() {
-        return new CreateOrderDTO(1L, 2L, createOrderItemsDTO());
+        return new CreateOrderDTO(1L, 2L, CreateOrderItemsDTO());
     }
 
     public static Order OrderEntityMock() {
         return new Order(CreateOrderDTOMock());
+    }
+
+    public static List<OrderDTO> OrdersDTOMock() {
+        return List.of(new OrderDTO[]{
+                new OrderDTO(1L, 2L, "Fernanda",
+                        BigDecimal.valueOf(10L), 1L, 1L)
+        });
     }
 
     public static OrderDetailDTO OrderDetailDTOMock() throws JsonProcessingException {

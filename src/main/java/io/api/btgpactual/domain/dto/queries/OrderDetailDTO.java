@@ -2,10 +2,7 @@ package io.api.btgpactual.domain.dto.queries;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -24,5 +21,10 @@ public class OrderDetailDTO extends OrderDTO {
     public List<OrderItemDTO> getItems() throws JsonProcessingException {
         final ObjectMapper jsonMapper = new ObjectMapper();
         return List.of(jsonMapper.readValue(this.items, OrderItemDTO[].class));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
     }
 }

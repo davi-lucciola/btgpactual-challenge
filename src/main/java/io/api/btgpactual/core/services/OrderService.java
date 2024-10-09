@@ -13,11 +13,9 @@ import io.api.btgpactual.domain.services.IOrderService;
 import io.api.btgpactual.core.usecases.commands.ProcessOrder;
 import io.api.btgpactual.core.usecases.queries.DetailOrder;
 import io.api.btgpactual.core.usecases.queries.GetAllOrders;
-import io.api.btgpactual.utils.responses.PaginationResponse;
+import io.api.btgpactual.utils.dto.PaginationResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +25,7 @@ public class OrderService implements IOrderService {
     private final ProcessOrder createUseCase;
 
     @Override
-    public PaginationResponse<OrderDTO> getAllOrders(QueryOrdersFilter filter) throws NoContentException {
+    public PaginationResponseDTO<OrderDTO> getAllOrders(QueryOrdersFilter filter) throws NoContentException {
         return getAllUseCase.getAllOrders(filter);
     }
 

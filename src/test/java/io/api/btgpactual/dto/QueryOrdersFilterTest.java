@@ -11,9 +11,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class QueryOrdersFilterTest {
     @Test
     public void validadeCustomerIdIsNotNull() {
-        var filter = new QueryOrdersFilter(null, null, null);
+        var filter = new QueryOrdersFilter(null, null, null, 1, 10);
 
-        ValidationException exception = Assertions.assertThrows(ValidationException.class, filter::validateCustomerIsNotNull);
+        ValidationException exception = Assertions.assertThrows(ValidationException.class, filter::validate);
 
         Assertions.assertEquals("O campo \"customerId\" é obrigatório.", exception.getMessage());
     }
